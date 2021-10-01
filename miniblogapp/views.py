@@ -1,18 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.db import IntegrityError
-
-from .models import User
+from django.contrib.auth.models import User
 
 
 def function_login(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
-        print(username, password)
         user = authenticate(request, username=username, password=password)
-        print(type(user), user is not None)
         if user is not None:
             login(request, user)
         else:
@@ -29,7 +26,10 @@ def login_page(request):
 
 
 def home(request):
-    return render(request, "miniblogapp/home.html", {})
+    if request.user.is_authenticated:
+        return render(request, "miniblogapp/home.html", {})
+    else:
+        return render(request, "miniblogapp/login.html", {})
 
 
 def register(request):
@@ -45,9 +45,10 @@ def register(request):
                 {"message": "Passwords must match."},
             )
         try:
-            user = User.objects.create_user(username, password)
+            user = User.objects.create_user(
+                username=username, password=password
+            )
             user.save()
-            print(f"register {type(user)}")
         except ValueError:
             return render(
                 request,
@@ -60,8 +61,7 @@ def register(request):
                 "miniblogapp/register.html",
                 {"message": "Username already taken."},
             )
-        login(request, user)
-        return HttpResponseRedirect("home")
+        return HttpResponseRedirect("login_page")
     return render(request, "miniblogapp/register.html")
 
 
