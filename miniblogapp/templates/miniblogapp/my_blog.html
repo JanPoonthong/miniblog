@@ -1,9 +1,7 @@
 {% extends "miniblogapp/layout.html" %} {% block body %}
-
-<h1>All Blogs</h1>
+<h1>My Blogs</h1>
 
 {% for blog in blogs %}
-
 <div class="card bg-light mb-3" style="max-width: 18rem">
   <div class="card-header">{{ blog.author }}</div>
   <div class="card-body">

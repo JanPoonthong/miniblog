@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 
+from .models import Blog
+
 
 def function_login(request):
     if request.method == "POST":
@@ -18,7 +20,12 @@ def function_login(request):
                 "miniblogapp/login.html",
                 {"message": "Invalid username and/or password."},
             )
-    return render(request, "miniblogapp/home.html", {})
+        return HttpResponseRedirect("home")
+
+
+def my_blog(request):
+    blogs = Blog.objects.filter(author=request.user)
+    return render(request, "miniblogapp/my_blog.html", {"blogs": blogs})
 
 
 def login_page(request):
@@ -27,7 +34,8 @@ def login_page(request):
 
 def home(request):
     if request.user.is_authenticated:
-        return render(request, "miniblogapp/home.html", {})
+        blogs = Blog.objects.filter(open_at=True)
+        return render(request, "miniblogapp/home.html", {"blogs": blogs})
     else:
         return render(request, "miniblogapp/login.html", {})
 
