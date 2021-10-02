@@ -2,6 +2,6 @@
 
 `./manage.py makemigrations`
 
-`./manage.py migrate`
+`manage.py migrate --run-syncdb`
 
 `./manage.py runserver`
