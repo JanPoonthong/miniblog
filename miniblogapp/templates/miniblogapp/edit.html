@@ -1,4 +1,53 @@
-{% extends "miniblogapp/layout.html" %} 
-{% block body %}
-<h1>Edit Blog {{ blog.name }}</h1>
+{% extends "miniblogapp/layout.html" %} {% block body %}
+<h1>Edit Blog {{ blog.name }}, by: {{ blog.author }}</h1>
+
+<form action="{% url 'edit_update' blog.id %}" method="POST">
+  {% csrf_token %}
+  <p>
+    <label for="id_name">Name:</label>
+    <input
+      type="text"
+      name="name"
+      maxlength="64"
+      required=""
+      id="id_name"
+      value="{{ blog.name }}"
+    />
+  </p>
+  <p>
+    <label for="id_content">Content:</label>
+    <textarea
+      name="content"
+      cols="40"
+      rows="10"
+      maxlength="120"
+      required=""
+      id="id_content"
+    >
+{{ blog.content }}</textarea
+    >
+  </p>
+
+  <p>
+    <label for="id_category">Category:</label>
+    <select name="category" required="" id="id_category">
+      <option value="" selected="">---------</option>
+
+      <option value="2">Programming</option>
+
+      <option value="3">Fashion</option>
+
+      <option value="4">Christmas</option>
+
+      <option value="5">Electronics</option>
+
+      <option value="6">Property</option>
+
+      <option value="7">Sport</option>
+
+      <option value="8">Other</option>
+    </select>
+  </p>
+  <input type="submit" value="Update" />
+</form>
 {% endblock %}

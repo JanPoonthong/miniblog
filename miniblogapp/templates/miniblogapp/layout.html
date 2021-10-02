@@ -21,7 +21,7 @@
       <a href="create_blog">Create blog</a>
       <a href="my_blog">My blog</a>
       <a href="{% url 'function_logout' %}">Logout</a>
-      <span>{{ user.username }}</span>
+      <span>User: {{ user.username }}</span>
       {% else %}
       <a href="{% url 'login_page' %}">Login</a>
       <a href="register">Register</a>

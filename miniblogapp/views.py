@@ -3,9 +3,35 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 from .models import Blog, Category
 from .forms import CreateBlog
+
+
+def remove_blog(request, blog_id):
+    if request.user.is_authenticated:
+        Blog.objects.get(pk=blog_id).delete()
+        return HttpResponseRedirect(reverse("my_blog"))
+    else:
+        return HttpResponseRedirect(reverse("login_page"))
+
+
+def edit_update(request, blog_id):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            name = request.POST["name"]
+            content = request.POST["content"]
+            category = request.POST["category"]
+            Blog.objects.filter(pk=blog_id).update(
+                name=name,
+                content=content,
+                category=category,
+                author=request.user,
+            )
+            return HttpResponseRedirect(reverse("home"))
+    else:
+        return HttpResponseRedirect(reverse("login_page"))
 
 
 def function_login(request):
@@ -41,43 +67,58 @@ def create_category():
 
 
 def edit(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id)
-    if request.user == blog.author:
-        return render(request, "miniblogapp/edit.html", {"blog": blog})
+    if request.user.is_authenticated:
+        blog = get_object_or_404(Blog, pk=blog_id)
+        if request.user == blog.author:
+            return render(request, "miniblogapp/edit.html", {"blog": blog})
+        else:
+            return HttpResponse("<h3>You're not the author of this blog</h3>")
     else:
-        return HttpResponse("<h3>You're not the author of this blog</h3>")
+        return HttpResponseRedirect(reverse("login_page"))
 
 
 def create_blog(request):
-    if request.method == "POST":
-        form = CreateBlog(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data["name"]
-            content = form.cleaned_data["content"]
-            category = form.cleaned_data["category"]
-            Blog.objects.create(
-                name=name,
-                content=content,
-                category=category,
-                author=request.user,
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = CreateBlog(request.POST)
+            if form.is_valid():
+                name = form.cleaned_data["name"]
+                content = form.cleaned_data["content"]
+                category = form.cleaned_data["category"]
+                Blog.objects.create(
+                    name=name,
+                    content=content,
+                    category=category,
+                    author=request.user,
+                )
+                return HttpResponseRedirect("home")
+        else:
+            form = CreateBlog()
+            return render(
+                request, "miniblogapp/create_blog.html", {"form": form}
             )
-            return HttpResponseRedirect("home")
     else:
-        form = CreateBlog()
-        return render(request, "miniblogapp/create_blog.html", {"form": form})
+        return HttpResponseRedirect(reverse("login_page"))
 
 
 def my_blog(request):
-    blogs = Blog.objects.filter(author=request.user)
-    return render(request, "miniblogapp/my_blog.html", {"blogs": blogs})
+    if request.user.is_authenticated:
+        blogs = Blog.objects.filter(author=request.user)
+        return render(request, "miniblogapp/my_blog.html", {"blogs": blogs})
+    else:
+        return HttpResponseRedirect(reverse("login_page"))
 
 
 def login_page(request):
-    return render(request, "miniblogapp/login.html", {})
+    if request.user.is_authenticated:
+        create_category()
+        return HttpResponseRedirect("home")
+    else:
+        create_category()
+        return render(request, "miniblogapp/login.html", {})
 
 
 def home(request):
-    create_category()
     if request.user.is_authenticated:
         blogs = Blog.objects.filter(open_at=True).exclude(author=request.user)
         author_blogs = Blog.objects.filter(author=request.user)
@@ -124,5 +165,10 @@ def register(request):
 
 
 def function_logout(request):
-    logout(request)
-    return HttpResponseRedirect("login_page")
+    if request.user.is_authenticated:
+        logout(request)
+        return HttpResponseRedirect("login_page")
+    else:
+        return HttpResponse(
+            "<h3>You can not logout because you're not login yet</h3>"
+        )
