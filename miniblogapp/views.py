@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 
-from .models import Blog
+from .models import Blog, Category
 from .forms import CreateBlog
 
 
@@ -22,6 +22,22 @@ def function_login(request):
                 {"message": "Invalid username and/or password."},
             )
         return HttpResponseRedirect("home")
+
+
+def create_category():
+    """First time when user visit the page"""
+    if Category.objects.exists() is False:
+        default_category = [
+            "Programming",
+            "Fashion",
+            "Christmas",
+            "Electronics",
+            "Property",
+            "Sport",
+            "Other",
+        ]
+        for category in default_category:
+            Category.objects.create(name=category)
 
 
 def create_blog(request):
@@ -53,6 +69,7 @@ def login_page(request):
 
 
 def home(request):
+    create_category()
     if request.user.is_authenticated:
         blogs = Blog.objects.filter(open_at=True)
         return render(request, "miniblogapp/home.html", {"blogs": blogs})
