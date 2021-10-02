@@ -79,9 +79,13 @@ def login_page(request):
 def home(request):
     create_category()
     if request.user.is_authenticated:
-        blogs = Blog.objects.filter(open_at=True, author!=request.user)
+        blogs = Blog.objects.filter(open_at=True).exclude(author=request.user)
         author_blogs = Blog.objects.filter(author=request.user)
-        return render(request, "miniblogapp/home.html", {"blogs": blogs, "author_blogs": author_blogs})
+        return render(
+            request,
+            "miniblogapp/home.html",
+            {"blogs": blogs, "author_blogs": author_blogs},
+        )
     else:
         return render(request, "miniblogapp/login.html", {})
 
