@@ -6,17 +6,7 @@
 
 <form action="{% url 'edit' blog.id %}">
   <div class="card bg-light mb-3" style="max-width: 18rem">
-    <div class="card-header">
-      Author: {{ blog.author }}
-      <button
-        type="submit"
-        class="btn btn-outline-warning"
-        style="float: right"
-        name="check:True"
-      >
-        Edit
-      </button>
-    </div>
+    <div class="card-header">Author: {{ blog.author }}</div>
     <div class="card-body">
       <h5 class="card-title">{{ blog.name }}</h5>
       <p class="card-text">{{ blog.content }}</p>
@@ -26,11 +16,27 @@
     </div>
   </div>
 </form>
-{% endfor %} 
+{% endfor %} {% for author_blog in author_blogs %}
 
-{% if message %}
-<script>
-    alert("You're not the author for this blog");
-</script>
-{% endif %}
-{% endblock %}
+<form action="{% url 'edit' author_blog.id %}">
+  <div class="card bg-light mb-3" style="max-width: 18rem">
+    <div class="card-header">
+      Author: {{ author_blog.author }}
+      <button
+        type="submit"
+        class="btn btn-outline-warning"
+        style="float: right"
+      >
+        Edit
+      </button>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ author_blog.name }}</h5>
+      <p class="card-text">{{ author_blog.content }}</p>
+      <div class="card-footer">
+        <small class="text-muted">{{ author_blog.category }}</small>
+      </div>
+    </div>
+  </div>
+</form>
+{% endfor %} {% endblock %}

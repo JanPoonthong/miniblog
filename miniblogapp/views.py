@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 from django.contrib.auth.models import User
 
@@ -45,7 +45,7 @@ def edit(request, blog_id):
     if request.user == blog.author:
         return render(request, "miniblogapp/edit.html", {"blog": blog})
     else:
-        return HttpResponseRedirect("home", {"message": True})
+        return HttpResponse("<h3>You're not the author of this blog</h3>")
 
 
 def create_blog(request):
@@ -79,8 +79,9 @@ def login_page(request):
 def home(request):
     create_category()
     if request.user.is_authenticated:
-        blogs = Blog.objects.filter(open_at=True)
-        return render(request, "miniblogapp/home.html", {"blogs": blogs})
+        blogs = Blog.objects.filter(open_at=True, author!=request.user)
+        author_blogs = Blog.objects.filter(author=request.user)
+        return render(request, "miniblogapp/home.html", {"blogs": blogs, "author_blogs": author_blogs})
     else:
         return render(request, "miniblogapp/login.html", {})
 
