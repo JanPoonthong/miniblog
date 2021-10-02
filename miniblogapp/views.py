@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
@@ -38,6 +38,14 @@ def create_category():
         ]
         for category in default_category:
             Category.objects.create(name=category)
+
+
+def edit(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    if request.user == blog.author:
+        return render(request, "miniblogapp/edit.html", {"blog": blog})
+    else:
+        return HttpResponseRedirect("home", {"message": True})
 
 
 def create_blog(request):

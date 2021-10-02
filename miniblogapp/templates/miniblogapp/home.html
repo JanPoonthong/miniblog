@@ -4,14 +4,33 @@
 
 {% for blog in blogs %}
 
-<div class="card bg-light mb-3" style="max-width: 18rem">
-  <div class="card-header">Author: {{ blog.author }}</div>
-  <div class="card-body">
-    <h5 class="card-title">{{ blog.name }}</h5>
-    <p class="card-text">{{ blog.content }}</p>
-    <div class="card-footer">
-      <small class="text-muted">{{ blog.category }}</small>
+<form action="{% url 'edit' blog.id %}">
+  <div class="card bg-light mb-3" style="max-width: 18rem">
+    <div class="card-header">
+      Author: {{ blog.author }}
+      <button
+        type="submit"
+        class="btn btn-outline-warning"
+        style="float: right"
+        name="check:True"
+      >
+        Edit
+      </button>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ blog.name }}</h5>
+      <p class="card-text">{{ blog.content }}</p>
+      <div class="card-footer">
+        <small class="text-muted">{{ blog.category }}</small>
+      </div>
     </div>
   </div>
-</div>
-{% endfor %} {% endblock %}
+</form>
+{% endfor %} 
+
+{% if message %}
+<script>
+    alert("You're not the author for this blog");
+</script>
+{% endif %}
+{% endblock %}
