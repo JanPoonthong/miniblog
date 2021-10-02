@@ -1,0 +1,8 @@
+{% extends "miniblogapp/layout.html" %} {% block body %}
+<h1>Create Blog</h1>
+
+<form action="{% url 'create_blog' %}" method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <input type="submit" value="Create blog">
+</form>
+{% endblock %}

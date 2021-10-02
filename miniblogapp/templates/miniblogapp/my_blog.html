@@ -1,7 +1,7 @@
 {% extends "miniblogapp/layout.html" %} {% block body %}
 <h1>My Blogs</h1>
 
-{% for blog in blogs %}
+{% for blog in blogs %} {% if blog.open_at %}
 <div class="card bg-light mb-3" style="max-width: 18rem">
   <div class="card-header">{{ blog.author }}</div>
   <div class="card-body">
@@ -12,4 +12,16 @@
     </div>
   </div>
 </div>
-{% endfor %} {% endblock %}
+{% else %}
+<div class="card bg-light mb-3" style="max-width: 18rem">
+  <div class="card-header">{{ blog.author }}</div>
+  <div class="card-body">
+    <h5 class="card-title">{{ blog.name }}</h5>
+    <p class="card-text">{{ blog.content }}</p>
+    <div class="card-footer">
+      <small class="text-muted">{{ blog.category }}</small>
+    </div>
+    <p style="color: red; margin-top: 10px; margin-bottom: 3px;">Blog Close</p>
+  </div>
+</div>
+{% endif %} {% endfor %} {% endblock %}

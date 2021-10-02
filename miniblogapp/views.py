@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 
 from .models import Blog
+from .forms import CreateBlog
 
 
 def function_login(request):
@@ -21,6 +22,25 @@ def function_login(request):
                 {"message": "Invalid username and/or password."},
             )
         return HttpResponseRedirect("home")
+
+
+def create_blog(request):
+    if request.method == "POST":
+        form = CreateBlog(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            content = form.cleaned_data["content"]
+            category = form.cleaned_data["category"]
+            Blog.objects.create(
+                name=name,
+                content=content,
+                category=category,
+                author=request.user,
+            )
+            return HttpResponseRedirect("home")
+    else:
+        form = CreateBlog()
+        return render(request, "miniblogapp/create_blog.html", {"form": form})
 
 
 def my_blog(request):

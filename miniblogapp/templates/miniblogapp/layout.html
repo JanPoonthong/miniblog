@@ -18,6 +18,7 @@
     <nav>
       {% if user.is_authenticated %}
       <a href="home">Home</a>
+      <a href="create_blog">Create blog</a>
       <a href="my_blog">My blog</a>
       <a href="{% url 'function_logout' %}">Logout</a>
       <span>{{ user.username }}</span>
