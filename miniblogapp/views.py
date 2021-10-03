@@ -121,10 +121,16 @@ def home(request):
         create_category()
         blogs = Blog.objects.filter(open_at=True).exclude(author=request.user)
         author_blogs = Blog.objects.filter(author=request.user)
+        is_blogs_exist = Blog.objects.exists()
+        print(is_blogs_exist)
         return render(
             request,
             "miniblogapp/home.html",
-            {"blogs": blogs, "author_blogs": author_blogs},
+            {
+                "blogs": blogs,
+                "author_blogs": author_blogs,
+                "is_blogs_exist": is_blogs_exist,
+            },
         )
     else:
         return render(request, "miniblogapp/login.html", {})
