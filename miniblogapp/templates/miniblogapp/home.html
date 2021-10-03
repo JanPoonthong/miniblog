@@ -2,10 +2,9 @@
 
 <h1>All Blogs</h1>
 
-<div style="display: flex; flex-wrap: wrap;">
+<div style="display: flex; flex-wrap: wrap">
   {% for blog in blogs %}
-  <form action="{% url 'edit' blog.id %}" style="width: 20%;
-  height: 100%;">
+  <form action="{% url 'edit' blog.id %}" style="width: 20%; height: 100%">
     <div class="card bg-light mb-3" style="max-width: 18rem">
       <div class="card-header">Author: {{ blog.author }}</div>
       <div class="card-body">
@@ -19,8 +18,10 @@
   </form>
   {% endfor %} {% for author_blog in author_blogs %}
 
-  <form action="{% url 'edit' author_blog.id %}" style="width: 20%;
-  height: 100%;">
+  <form
+    action="{% url 'edit' author_blog.id %}"
+    style="width: 20%; height: 100%"
+  >
     <div class="card bg-light mb-3" style="max-width: 18rem">
       <div class="card-header">
         Author: {{ author_blog.author }}

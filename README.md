@@ -11,7 +11,7 @@ Prerequisites:
 
 Instructions:
 
-1. Download pip:
+1.  Download pip:
 
         $ sudo apt install python3-pip # only for linux
 
