@@ -15,7 +15,7 @@ def remove_blog(request, blog_id):
     This function remove the blog by knowing the blog_id
     """
     if request.user.is_authenticated:
-        blog = Blog.objects.get(pk=blog_id)
+        blog = get_object_or_404(Blog, pk=blog_id)
         if request.user == blog.author:
             blog.delete()
             return HttpResponseRedirect(reverse("home"))

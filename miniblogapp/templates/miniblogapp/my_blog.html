@@ -4,7 +4,7 @@
 {% if is_user_blogs_exist %}
 <div style="display: flex; flex-wrap: wrap">
   {% for blog in blogs %}
-  <div style="padding: 10px">
+  <div style="padding-right: 10px">
     <form action="{% url 'edit' blog.id %}">
       <div class="card bg-light mb-3" style="max-width: 18rem">
         <div class="card-header">
@@ -12,7 +12,7 @@
           <button
             type="submit"
             class="btn btn-outline-warning"
-            style="vertical-align: middle; margin-left: 50px"
+            style="margin-left: 50px; float: right"
           >
             Edit
           </button>
