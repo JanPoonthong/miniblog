@@ -13,11 +13,11 @@ Instructions:
 
 1. Download pip:
 
-        $ sudo apt install python3-pip # linux
+        $ sudo apt install python3-pip # only for linux
 
 1.  Download Django:
 
-        $ pip install Django==3.2.7
+        $ pip3 install Django==3.2.7
 
 1.  Run:
 
@@ -31,7 +31,7 @@ Instructions:
         $ python3 manage.py migrate --run-syncdb
         $ python3 manage.py runserver
 
-After doing `python3 manage.py runserver` check http://127.0.0.1:8000/ or http://localhost:8000/
+After doing `python3 manage.py runserver`, check http://127.0.0.1:8000/ or http://localhost:8000/
 
 [django-download]: https://www.djangoproject.com/download/
 [python-download]: https://www.python.org/downloads/
