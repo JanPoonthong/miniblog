@@ -104,7 +104,12 @@ def create_blog(request):
 def my_blog(request):
     if request.user.is_authenticated:
         blogs = Blog.objects.filter(author=request.user)
-        return render(request, "miniblogapp/my_blog.html", {"blogs": blogs})
+        is_user_blogs_exist = blogs.exists()
+        return render(
+            request,
+            "miniblogapp/my_blog.html",
+            {"blogs": blogs, "is_user_blogs_exist": is_user_blogs_exist},
+        )
     else:
         return HttpResponseRedirect(reverse("login_page"))
 

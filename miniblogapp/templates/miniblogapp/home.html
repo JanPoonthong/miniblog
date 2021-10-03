@@ -7,7 +7,9 @@
   <div style="padding: 10px">
     <form action="{% url 'edit' blog.id %}">
       <div class="card bg-light mb-3" style="max-width: 18rem">
-        <div class="card-header">Author: {{ blog.author }}</div>
+        <div class="card-header" style="padding-right: 100px">
+          Author: {{ blog.author }}
+        </div>
         <div class="card-body">
           <h5 class="card-title">{{ blog.name }}</h5>
           <p class="card-text">{{ blog.content }}</p>
@@ -43,7 +45,7 @@
     </form>
   </div>
   {% endfor %} {% else %}
-  <h3>No blogs</h3>
+  <h3>No blogs <a href="create_blog">Click ME to create a blog</a></h3>
   {% endif %}
 </div>
 {% endblock %}

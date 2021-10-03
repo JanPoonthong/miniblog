@@ -1,6 +1,7 @@
 {% extends "miniblogapp/layout.html" %} {% block body %}
 <h1>My Blogs</h1>
 
+{% if is_user_blogs_exist %}
 <div style="display: flex; flex-wrap: wrap">
   {% for blog in blogs %}
   <div style="padding: 10px">
@@ -28,4 +29,8 @@
   </div>
   {% endfor %}
 </div>
-{% endblock %}
+{% else %}
+<h3>
+  You don't have any blogs <a href="create_blog">Click ME to create a blog</a>
+</h3>
+{% endif %} {% endblock %}
