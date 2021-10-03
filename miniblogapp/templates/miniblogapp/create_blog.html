@@ -3,6 +3,6 @@
 
 <form action="{% url 'create_blog' %}" method="POST">
   {% csrf_token %} {{ form.as_p }}
-  <input type="submit" value="Create blog">
+  <input class="btn btn-outline-primary" type="submit" value="Create blog">
 </form>
 {% endblock %}

@@ -20,7 +20,7 @@
       name="content"
       cols="40"
       rows="10"
-      maxlength="120"
+      maxlength="300"
       required=""
       id="id_content"
     >
@@ -33,21 +33,25 @@
     <select name="category" required="" id="id_category">
       <option value="" selected="">---------</option>
 
-      <option value="2">Programming</option>
+      <option value="1">Programming</option>
 
-      <option value="3">Fashion</option>
+      <option value="2">Fashion</option>
 
-      <option value="4">Christmas</option>
+      <option value="3">Christmas</option>
 
-      <option value="5">Electronics</option>
+      <option value="4">Electronics</option>
 
-      <option value="6">Property</option>
+      <option value="5">Property</option>
 
-      <option value="7">Sport</option>
+      <option value="6">Sport</option>
 
-      <option value="8">Other</option>
+      <option value="7">Other</option>
     </select>
   </p>
-  <input type="submit" value="Update" />
+  <input class="btn btn-outline-success" type="submit" value="Update" />
+</form>
+<br>
+<form action="{% url 'remove_blog' blog.id %}">
+  <input class="btn btn-outline-danger" type="submit" value="Delete Blog">
 </form>
 {% endblock %}

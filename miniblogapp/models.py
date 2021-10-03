@@ -11,7 +11,7 @@ class Category(models.Model):
 
 class Blog(models.Model):
     name = models.CharField(max_length=64)
-    content = models.TextField(max_length=120)
+    content = models.TextField(max_length=300)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, default=None
     )

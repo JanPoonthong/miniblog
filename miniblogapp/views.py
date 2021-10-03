@@ -12,7 +12,7 @@ from .forms import CreateBlog
 def remove_blog(request, blog_id):
     if request.user.is_authenticated:
         Blog.objects.get(pk=blog_id).delete()
-        return HttpResponseRedirect(reverse("my_blog"))
+        return HttpResponseRedirect(reverse("home"))
     else:
         return HttpResponseRedirect(reverse("login_page"))
 
