@@ -3,27 +3,29 @@
 
 <div style="display: flex; flex-wrap: wrap">
   {% for blog in blogs %}
-  <form action="{% url 'edit' blog.id %}" style="width: 20%; height: 100%">
-    <div class="card bg-light mb-3" style="max-width: 18rem">
-      <div class="card-header">
-        Author: {{ blog.author }}
-        <button
-          type="submit"
-          class="btn btn-outline-warning"
-          style="float: right"
-        >
-          Edit
-        </button>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{ blog.name }}</h5>
-        <p class="card-text">{{ blog.content }}</p>
-        <div class="card-footer">
-          <small class="text-muted">{{ blog.category }}</small>
+  <div style="padding: 10px">
+    <form action="{% url 'edit' blog.id %}">
+      <div class="card bg-light mb-3" style="max-width: 18rem">
+        <div class="card-header">
+          Author: {{ blog.author }}
+          <button
+            type="submit"
+            class="btn btn-outline-warning"
+            style="vertical-align: middle; margin-left: 50px"
+          >
+            Edit
+          </button>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{ blog.name }}</h5>
+          <p class="card-text">{{ blog.content }}</p>
+          <div class="card-footer">
+            <small class="text-muted">{{ blog.category }}</small>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
   {% endfor %}
 </div>
 {% endblock %}

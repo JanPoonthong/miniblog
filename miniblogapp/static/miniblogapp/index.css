@@ -1,3 +1,17 @@
 select {
   display: block;
 }
+
+nav {
+  height: 64px;
+}
+
+@media only screen and (max-width: 992px) {
+  nav {
+    height: 315px;
+  }
+}
+
+.navbar-nav .nav-link {
+  padding-left: 14px;
+}
