@@ -4,7 +4,7 @@
 
 <div style="display: flex; flex-wrap: wrap">
   {% if is_blogs_exist %} {% for blog in blogs %}
-  <div style="padding: 10px">
+  <div style="padding-right: 10px">
     <form action="{% url 'edit' blog.id %}">
       <div class="card bg-light mb-3" style="max-width: 18rem">
         <div class="card-header" style="padding-right: 100px">
@@ -21,7 +21,7 @@
     </form>
   </div>
   {% endfor %} {% for author_blog in author_blogs %}
-  <div style="padding: 10px">
+  <div style="padding-right: 10px">
     <form action="{% url 'edit' author_blog.id %}">
       <div class="card bg-light mb-3" style="max-width: 18rem">
         <div class="card-header">
@@ -29,7 +29,7 @@
           <button
             type="submit"
             class="btn btn-outline-warning"
-            style="margin-left: 50px; float: right;"
+            style="margin-left: 50px; float: right"
           >
             Edit
           </button>

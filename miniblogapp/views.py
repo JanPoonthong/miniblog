@@ -16,26 +16,35 @@ def remove_blog(request, blog_id):
             blog.delete()
             return HttpResponseRedirect(reverse("home"))
         else:
-            return HttpResponse("<h3>You're not the author of this blog, you can't remove this blog</h3>")
+            return HttpResponse(
+                "<h3>You're not the author of this blog, you can't remove this blog</h3>"
+            )
     else:
         return HttpResponseRedirect(reverse("login_page"))
 
 
 def edit_update(request, blog_id):
     if request.user.is_authenticated:
-        if request.method == "POST":
-            name = request.POST["name"]
-            content = request.POST["content"]
-            category = request.POST["category"]
-            Blog.objects.filter(pk=blog_id).update(
-                name=name,
-                content=content,
-                category=category,
-                author=request.user,
+        blog = get_object_or_404(Blog, pk=blog_id)
+        if request.user == blog.author:
+            if request.method == "POST":
+                name = request.POST["name"]
+                content = request.POST["content"]
+                category = request.POST["category"]
+                Blog.objects.filter(pk=blog_id).update(
+                    name=name,
+                    content=content,
+                    category=category,
+                    author=request.user,
+                )
+                return HttpResponseRedirect(reverse("home"))
+        else:
+            return HttpResponse(
+                "<h3>You're not the author of this blog, you can't edit this blog</h3>"
             )
-            return HttpResponseRedirect(reverse("home"))
     else:
         return HttpResponseRedirect(reverse("login_page"))
+    return HttpResponseRedirect(reverse("edit", args=(blog_id,)))
 
 
 def function_login(request):
@@ -131,7 +140,6 @@ def home(request):
         blogs = Blog.objects.filter(open_at=True).exclude(author=request.user)
         author_blogs = Blog.objects.filter(author=request.user)
         is_blogs_exist = Blog.objects.exists()
-        print(is_blogs_exist)
         return render(
             request,
             "miniblogapp/home.html",
