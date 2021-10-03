@@ -10,6 +10,10 @@ from .forms import CreateBlog
 
 
 def remove_blog(request, blog_id):
+    """
+    :arg -> blog_id for know which blog it is
+    This function remove the blog by knowing the blog_id
+    """
     if request.user.is_authenticated:
         blog = Blog.objects.get(pk=blog_id)
         if request.user == blog.author:
@@ -24,6 +28,10 @@ def remove_blog(request, blog_id):
 
 
 def edit_update(request, blog_id):
+    """
+    :arg -> blog_id for know which blog it is
+    This function is for updating the blog, this not a route in the website
+    """
     if request.user.is_authenticated:
         blog = get_object_or_404(Blog, pk=blog_id)
         if request.user == blog.author:
@@ -48,6 +56,9 @@ def edit_update(request, blog_id):
 
 
 def function_login(request):
+    """
+    This function check if username is taken, if not login to the site, this not a route in the website
+    """
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -80,6 +91,10 @@ def create_category():
 
 
 def edit(request, blog_id):
+    """
+    :arg -> blog_id for know which blog it is
+    This function render edit page according to if the user is the author
+    """
     if request.user.is_authenticated:
         blog = get_object_or_404(Blog, pk=blog_id)
         if request.user == blog.author:
@@ -91,6 +106,9 @@ def edit(request, blog_id):
 
 
 def create_blog(request):
+    """
+    This function create a blog, by saving username, content, category, and author
+    """
     if request.user.is_authenticated:
         if request.method == "POST":
             form = CreateBlog(request.POST)
@@ -115,6 +133,9 @@ def create_blog(request):
 
 
 def my_blog(request):
+    """
+    This function show the user blog, this is made because is easier for the user to navigate and update their blogs
+    """
     if request.user.is_authenticated:
         blogs = Blog.objects.filter(author=request.user)
         is_user_blogs_exist = blogs.exists()
@@ -135,6 +156,9 @@ def login_page(request):
 
 
 def home(request):
+    """
+    This function shows all the blogs of each individual user
+    """
     if request.user.is_authenticated:
         create_category()
         blogs = Blog.objects.filter(open_at=True).exclude(author=request.user)
