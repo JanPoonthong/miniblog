@@ -11,6 +11,10 @@ Prerequisites:
 
 Instructions:
 
+1. Download pip:
+
+        $ sudo apt install python3-pip # linux
+
 1.  Download Django:
 
         $ pip install Django==3.2.7
