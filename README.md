@@ -31,7 +31,7 @@ Instructions:
         $ python3 manage.py migrate --run-syncdb
         $ python3 manage.py runserver
 
-After doing ```python3 manage.py runserver```, check http://127.0.0.1:8000/ or http://localhost:8000/
+After doing `python3 manage.py runserver`, check http://127.0.0.1:8000/ or http://localhost:8000/
 
 ### Windows
 
